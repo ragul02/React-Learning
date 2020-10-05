@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   }
 
   
-  const rows = [
+  let rows = [
 	createData(1, 'Ragul', 'ABC Bank', 'INR'),
 	createData(2, 'Vignesh', 'XYZ Bank', 'USD'),
 	createData(3, 'Ragul', 'QWE Bank', 'EUR'),
@@ -51,6 +51,7 @@ const useStyles = makeStyles({
 	createData(5, 'Ragul', 'QWE Bank', 'USD'),
   ];
 
+  let displayRows  = rows;
   
   export default function BasicTable() {
 	const classes = useStyles();
@@ -71,13 +72,14 @@ const useStyles = makeStyles({
 	const handleChange = (event) => {
 		console.log(event.target.value,  custName);
 	  setName(event.target.value);
-	  rows.filter( row => {
+	  const filteredRows = rows.filter( row => {
 		 if(row.customerName.toLowerCase().includes(event.target.value)) {
 			 console.log('row-->', row);
 			 return row;
 		 }
-		 return row;
-	  })
+		});
+		displayRows = filteredRows;
+		return;
 	};
 
 	return (
@@ -94,14 +96,14 @@ const useStyles = makeStyles({
 		  <TableHead>
 		  <TableRow>
             <StyledTableCell align="right">Customer Id</StyledTableCell>
-            <StyledTableCell align="right">Customer Name&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Customer Bank&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Currency&nbsp;(g)</StyledTableCell>
-			<StyledTableCell align="left">Button&nbsp;(g)</StyledTableCell>
+            <StyledTableCell align="right">Customer Name&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Customer Bank&nbsp;</StyledTableCell>
+            <StyledTableCell align="right">Currency&nbsp;</StyledTableCell>
+			<StyledTableCell align="left">Button&nbsp;</StyledTableCell>
           </TableRow>
 		  </TableHead>
 		  <TableBody>
-			{rows.map((row) => (
+			{displayRows.map((row) => (
 			  <StyledTableRow key={row.customerId}>
               <StyledTableCell component="th" scope="row">
                 {row.customerId}
